@@ -1,16 +1,21 @@
 const buttonSearch = document.getElementById('searchBtn')
 const destinations = []
+const searchResultDiv = document.getElementById('searchResult');
 
 function search() {
     // retrieves input and converts to lowercase
     const destinationSearch = document.getElementById('destinationInput').value.toLowerCase();
-    
 
+
+    
 }
 
 function recommendationResults() {
     // fetch api data
     fetch('travel_recommendation_api.json')
+
+        if (searchResultDiv === ) {}
+
         .then (response => response.json());
         // handles response in json format
         .then (data => {
