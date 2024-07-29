@@ -19,7 +19,12 @@ function recommendationResults() {
         // handles response in json format
         .then (data => {
             // 
-            const destination = data.destination.find(item => item.countries.toLowerCase() === destinationSearch)
+            const countries = ["country", "countries"];
+            const beaches = ["beach", "beaches"];
+            const temples = ["temples", "temple"];
+            //const countries = data.destination.find(item => item.countries.toLowerCase()  === destinationSearch )
+            
+            
         }
     )
 }
