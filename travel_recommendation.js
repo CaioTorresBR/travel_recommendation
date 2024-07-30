@@ -1,8 +1,9 @@
 const buttonSearch = document.getElementById('searchBtn')
 const destinations = []
 const searchResultDiv = document.getElementById('searchResult');
+const data = href="./travel_recommendation_api.json"
 
-
+console.log("Data source: ", data)
 
 function recommendationResults() {
 
@@ -18,11 +19,10 @@ function recommendationResults() {
         .then (response => response.json())
         // handles response in json format
         .then (data => {
-            // 
-            const countries = ["country", "countries"];
-            const beaches = ["beach", "beaches"];
-            const temples = ["temples", "temple"];
-            //const countries = data.destination.find(item => item.countries.toLowerCase()  === destinationSearch )
+            
+            const country = data.destination.find(item => item.countries.name.toLowerCase()  === destinationSearch )
+            const temple = data.destination.find(item => item.temples.name.toLowerCase() === destinationSearch ) 
+            const beach = data.destination.find(item => item.beaches.name.toLowerCse() === destinationSearch )
             
             
         }
@@ -34,3 +34,7 @@ function recommendationResults() {
         document.getElementById("searchResult").value = ""
         document.getElementById("destinationInput").value = ""
     }
+
+
+searchBtn.addEventListener("click", search);
+resetBtn.addEventListener("click", resetSearch);
