@@ -11,17 +11,20 @@ async function fetchTravelData() {
         const response = await fetch('travel_recommendation_api.json');
         const data = await response.json();
         console.log('Fetched data: ', data); // logs the fetched data
-        return data.countries;
+        return data;
     }
     catch (error) {
         console.error("Error fetching travel data:", error);
+        throw error
     }
 }
 
 // parsing and dispaying the data
-function displayTravelData(countries) {
+function displayTravelData(cities) {
     console.log('Countries Data: ', countries); // logs countries data
-    const resultsContainer = document.getElementById("searchResult"); 
+    const resultsContainer = document.getElementById("searchResult");
+
+
 
     // clears previous results
     resultsContainer.innerHTML = '';
@@ -31,26 +34,31 @@ function displayTravelData(countries) {
         return;
     }
 
-    countries.forEach(countries => {
-        if (!Array.isArray(countries.cities)) {
+    countries.forEach(country => {
+        if (country.name != destinationName) {
+            return
+        } 
+
+
+        if (!Array.isArray(country.cities)) {
             console.error('Expected an array of citie for country:', country);
             return;
         }
 
 
-        countries.cities.forEach(cities => {
+        country.cities.forEach(city => {
             // creates a container for each city
             const cityContainer = document.createElement('div');
             cityContainer.classList.add('city');
     
             // creates an image element
             const img = document.createElement('img');
-            img.src = cities.imageUrl; // Ensures JSON contains correct image URL
-            img.alt = cities.name;
+            img.src = city.imageUrl; // Ensures JSON contains correct image URL
+            img.alt = city.name;
     
             // creates a description element
             const description = document.createElement('p');
-            description.textContent = cities.description; // ensures JSON contains correct description
+            description.textContent = city.description; // ensures JSON contains correct description
     
             // appends image and description to the place container
             cityContainer.appendChild(img);
@@ -65,13 +73,10 @@ function displayTravelData(countries) {
 // handle search button click
 // (adds event listener to the search button)
 document.getElementById('searchBtn').addEventListener('click', async () => {
-    const countries = await fetchTravelData();
-    if (Array.isArray(countries)) {
-        displayTravelData(countries);
-    }
-    else {
-        console.error('Fetched data is not an array')
-    }  
+    const input = document.getElementById("destinationInput");
+    const destinationType = input.value;
+    const jsonData = await fetchTravelData();
+    displayTravelData(jsonData[destinationType]);
 });
 
 /*
